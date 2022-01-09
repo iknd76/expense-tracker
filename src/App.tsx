@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import ExpenseList from "./components/ExpenseList";
+import YearFilter from "./components/YearFilter";
 
 const initialExpenses = [
   {
@@ -26,6 +27,10 @@ function App() {
   const [expenses, setExpenses] = useState(initialExpenses);
   const [year, setYear] = useState(new Date().getFullYear());
 
+  const onYearChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setYear(+event.target.value);
+  };
+
   const filteredExpenses = expenses
     .filter((a) => a.date.getFullYear() === year)
     .sort((a, b) => +a.date - +b.date);
@@ -35,6 +40,7 @@ function App() {
       <div className="py-4 border-b">
         <h1 className="text-4xl font-bold tracking-tight">Expense Tracker</h1>
       </div>
+      <YearFilter selectedYear={year} onChange={onYearChange} />
       <ExpenseList expenses={filteredExpenses} />
     </div>
   );
