@@ -2,10 +2,10 @@ import React, { ChangeEvent } from "react";
 
 interface Props {
   selectedYear: number;
-  onChange(e: ChangeEvent): void;
+  onYearChange(e: ChangeEvent): void;
 }
 
-const YearFilter: React.FC<Props> = ({ selectedYear, onChange }) => {
+const YearFilter: React.FC<Props> = ({ selectedYear, onYearChange }) => {
   const years = [];
   const currentYear = new Date().getFullYear();
   for (let i = currentYear - 4; i < currentYear + 5; i++) {
@@ -20,8 +20,8 @@ const YearFilter: React.FC<Props> = ({ selectedYear, onChange }) => {
       <select
         id="yearFilter"
         value={selectedYear}
-        onChange={onChange}
-        className="py-1 pl-3 md:text-sm border-neutral-300 rounded-md"
+        onChange={onYearChange}
+        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
       >
         {years.map((year) => (
           <option key={year} value={year}>

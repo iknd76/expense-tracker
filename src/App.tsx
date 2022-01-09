@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
+import { Expense } from "./types";
+import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import YearFilter from "./components/YearFilter";
 
-const initialExpenses = [
+const initialExpenses: Expense[] = [
   {
     id: "e1",
     title: "Udemy subscription",
@@ -31,6 +33,10 @@ function App() {
     setYear(+event.target.value);
   };
 
+  const onEventAdd = (expense: Expense) => {
+    setExpenses((currentExpenses) => [...currentExpenses, expense]);
+  };
+
   const filteredExpenses = expenses
     .filter((a) => a.date.getFullYear() === year)
     .sort((a, b) => +a.date - +b.date);
@@ -40,7 +46,8 @@ function App() {
       <div className="py-4 border-b">
         <h1 className="text-4xl font-bold tracking-tight">Expense Tracker</h1>
       </div>
-      <YearFilter selectedYear={year} onChange={onYearChange} />
+      <ExpenseForm onEventAdd={onEventAdd} />
+      <YearFilter selectedYear={year} onYearChange={onYearChange} />
       <ExpenseList expenses={filteredExpenses} />
     </div>
   );
