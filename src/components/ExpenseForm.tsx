@@ -6,6 +6,7 @@ type Props = {
 };
 
 const ExpenseForm: React.FC<Props> = ({ onEventAdd }) => {
+  const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0.0);
   const [date, setDate] = useState(new Date());
@@ -32,10 +33,36 @@ const ExpenseForm: React.FC<Props> = ({ onEventAdd }) => {
       date: date,
     });
 
+    resetForm();
+  };
+
+  const resetForm = () => {
     setTitle("");
     setAmount(0.0);
     setDate(new Date());
   };
+
+  const showForm = () => {
+    setIsEditing(true);
+  };
+
+  const hideForm = () => {
+    setIsEditing(false);
+    resetForm();
+  };
+
+  if (!isEditing) {
+    return (
+      <div className="py-4 border-b">
+        <button
+          onClick={showForm}
+          className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Add new expense
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form
@@ -85,9 +112,19 @@ const ExpenseForm: React.FC<Props> = ({ onEventAdd }) => {
         />
       </div>
 
-      <div>
-        <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <div className="flex items-center space-x-4">
+        <button
+          type="submit"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
           Add expense
+        </button>
+
+        <button
+          className="inline-flex items-center px-4 py-2 text-sm font-medium"
+          onClick={hideForm}
+        >
+          Cancel
         </button>
       </div>
     </form>

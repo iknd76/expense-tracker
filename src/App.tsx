@@ -1,29 +1,17 @@
 import React, { ChangeEvent, useState } from "react";
 import { Expense } from "./types";
+import Chart from "./components/Chart";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import YearFilter from "./components/YearFilter";
+import data from "./utils/data.json";
 
-const initialExpenses: Expense[] = [
-  {
-    id: "e1",
-    title: "Udemy subscription",
-    amount: 29.99,
-    date: new Date(2022, 0, 1),
-  },
-  {
-    id: "e2",
-    title: "Starbucks coffee",
-    amount: 13.27,
-    date: new Date(2022, 0, 2),
-  },
-  {
-    id: "e3",
-    title: "Car service",
-    amount: 239.87,
-    date: new Date(2021, 11, 23),
-  },
-];
+const initialExpenses: Expense[] = data.map((item) => {
+  return {
+    ...item,
+    date: new Date(item.date),
+  };
+});
 
 function App() {
   const [expenses, setExpenses] = useState(initialExpenses);
@@ -44,10 +32,13 @@ function App() {
   return (
     <div className="w-full max-w-2xl mx-auto p-8">
       <div className="py-4 border-b">
-        <h1 className="text-4xl font-bold tracking-tight">Expense Tracker</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          Expense Tracker <span className="text-neutral-500">{year}</span>
+        </h1>
       </div>
       <ExpenseForm onEventAdd={onEventAdd} />
       <YearFilter selectedYear={year} onYearChange={onYearChange} />
+      <Chart expenses={filteredExpenses} />
       <ExpenseList expenses={filteredExpenses} />
     </div>
   );
