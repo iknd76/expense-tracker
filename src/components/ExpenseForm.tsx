@@ -68,6 +68,7 @@ const ExpenseForm: React.FC<Props> = ({ onEventAdd }) => {
     <form
       onSubmit={handleSubmit}
       className="grid grid-cols-2 gap-4 py-4 border-b"
+      data-testid="expenseForm"
     >
       <div className="col-span-2">
         <label className="block mb-1 text-sm font-medium" htmlFor="title">
